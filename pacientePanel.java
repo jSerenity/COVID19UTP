@@ -1,7 +1,7 @@
 import java.awt.*;
 import java.awt.event.*;
 import java.io.UnsupportedEncodingException;
-
+import java.sql.*;
 import javax.swing.*;
 import javax.swing.border.Border;
 import javax.swing.border.EmptyBorder;
@@ -13,10 +13,11 @@ public class pacientePanel extends JPanel {
     private JButton limpiar;
     JButton buscar;
     private JTextField tsearch;
+    private String[] tipos ={"Cedula","Codigo"};
     private JButton search;
     private JLabel tipoB; 
     private JComboBox idB; 
- 
+    private JLabel res; 
     private ButtonGroup searchGroup;
     private Container c; 
     private JLabel titulo; 
@@ -40,22 +41,15 @@ public class pacientePanel extends JPanel {
     private JComboBox tprovincia;
     JButton listar;
     JTable table;
-    String[] columnNames = {"First Name",
-                        "Last Name",
-                        "Sport",
-                        "# of Years",
-                        "Vegetarian"};
-    Object[][] data = {
-        {"Kathy", "Smith",
-         "Snowboarding", new Integer(5), new Boolean(false)},
-        {"John", "Doe",
-         "Rowing", new Integer(3), new Boolean(true)},
-        {"Sue", "Black",
-         "Knitting", new Integer(2), new Boolean(false)},
-        {"Jane", "White",
-         "Speed reading", new Integer(20), new Boolean(true)},
-        {"Joe", "Brown",
-         "Pool", new Integer(10), new Boolean(false)}
+    String[] columnNames = {"Nombre",
+                        "Apellido",
+                        "Cedula"};
+    Object[][] data;
+    ActionListener buttonListener = new ActionListener() {
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            clickGeneral(e);
+        }
     };
     public pacientePanel(){
         setBackground(Color.YELLOW);
@@ -70,12 +64,7 @@ public class pacientePanel extends JPanel {
     add(c);
     }
     public JPanel mandos(){
-        ActionListener buttonListener = new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                clickGeneral(e);
-            }
-        };
+
         JPanel panelMandos = new JPanel(new FlowLayout());
         limpiar= new JButton("limpiar");
         limpiar.setEnabled(false);
@@ -103,7 +92,7 @@ public class pacientePanel extends JPanel {
         c = new JPanel(); 
         c.setLayout(null);
        
-        c.setPreferredSize(new Dimension(650, 500)); 
+        c.setPreferredSize(new Dimension(810, 500)); 
         titulo = new JLabel("Pacientes"); 
         titulo.setFont(new Font("Arial", Font.PLAIN, 20)); 
         titulo.setSize(300, 20); 
@@ -121,7 +110,7 @@ public class pacientePanel extends JPanel {
         tipoB.setSize(200, 20); 
         tipoB.setLocation(50, 50); 
         tipoB.setVisible(false);
-        idB = new JComboBox(); 
+        idB = new JComboBox(tipos); 
         idB.setFont(new Font("Arial", Font.PLAIN, 15)); 
         idB.setSize(60, 20); 
         idB.setLocation(220, 50);
@@ -135,6 +124,14 @@ public class pacientePanel extends JPanel {
         search.setLocation(400, 40);
         search.setSize(30, 30);
         search.setVisible(false);
+        search.addActionListener(buttonListener);
+
+        res = new JLabel(""); 
+        res.setFont(new Font("Arial", Font.PLAIN, 20)); 
+        res.setForeground(Color.RED);
+        res.setSize(500, 25); 
+        res.setLocation(100, 500); 
+        c.add(res); 
         // search.setBorder(new RoundedBorder(10));
         ImageIcon icon = createImageIcon("iconos/search-icon.png",
                                  "Busqueda");
@@ -148,7 +145,7 @@ public class pacientePanel extends JPanel {
         c.add(panelsearch);
 
         nombre = new JLabel("Nombre"); 
-        nombre.setFont(new Font("Arial", Font.PLAIN, 20)); 
+        nombre.setFont(new Font("Arial", Font.PLAIN, 15)); 
         nombre.setSize(100, 20); 
         nombre.setLocation(50, 100); 
         c.add(nombre);
@@ -159,7 +156,7 @@ public class pacientePanel extends JPanel {
         c.add(tname); 
 
         apellido = new JLabel("Apellido"); 
-        apellido.setFont(new Font("Arial", Font.PLAIN, 20)); 
+        apellido.setFont(new Font("Arial", Font.PLAIN, 15)); 
         apellido.setSize(100, 20); 
         apellido.setLocation(50, 130); 
         c.add(apellido);
@@ -170,7 +167,7 @@ public class pacientePanel extends JPanel {
         c.add(tlastname); 
 
         cedula = new JLabel("Cedula"); 
-        cedula.setFont(new Font("Arial", Font.PLAIN, 20)); 
+        cedula.setFont(new Font("Arial", Font.PLAIN, 15)); 
         cedula.setSize(100, 20); 
         cedula.setLocation(50, 160); 
         c.add(cedula);
@@ -181,7 +178,7 @@ public class pacientePanel extends JPanel {
         c.add(tid);
 
         edad = new JLabel("Edad"); 
-        edad.setFont(new Font("Arial", Font.PLAIN, 20)); 
+        edad.setFont(new Font("Arial", Font.PLAIN, 15)); 
         edad.setSize(190, 20); 
         edad.setLocation(50, 190); 
         c.add(edad); 
@@ -192,7 +189,7 @@ public class pacientePanel extends JPanel {
         c.add(tedad); 
         
         tel = new JLabel("Telefono"); 
-        tel.setFont(new Font("Arial", Font.PLAIN, 20)); 
+        tel.setFont(new Font("Arial", Font.PLAIN, 15)); 
         tel.setSize(100, 20); 
         tel.setLocation(50, 220); 
         c.add(tel);
@@ -203,7 +200,7 @@ public class pacientePanel extends JPanel {
         c.add(ttel);
 
         sexo = new JLabel("Sexo"); 
-        sexo.setFont(new Font("Arial", Font.PLAIN, 20)); 
+        sexo.setFont(new Font("Arial", Font.PLAIN, 15)); 
         sexo.setSize(100, 20); 
         sexo.setLocation(50, 250); 
         c.add(sexo); 
@@ -224,7 +221,7 @@ public class pacientePanel extends JPanel {
         gengp.add(female); 
 
         provincia = new JLabel("Provincia"); 
-        provincia.setFont(new Font("Arial", Font.PLAIN, 20)); 
+        provincia.setFont(new Font("Arial", Font.PLAIN, 15)); 
         provincia.setSize(100, 20); 
         provincia.setLocation(50, 280); 
         c.add(provincia); 
@@ -234,8 +231,8 @@ public class pacientePanel extends JPanel {
         tprovincia.setLocation(150, 280); 
         c.add(tprovincia); 
 
-        add = new JLabel("Dirección"); 
-        add.setFont(new Font("Arial", Font.PLAIN, 20)); 
+        add = new JLabel("Direccion"); 
+        add.setFont(new Font("Arial", Font.PLAIN, 15)); 
         add.setSize(100, 20); 
         add.setLocation(50, 310); 
         c.add(add); 
@@ -245,12 +242,6 @@ public class pacientePanel extends JPanel {
         tadd.setLocation(150, 310); 
         tadd.setLineWrap(true); 
         c.add(tadd); 
-
-        table = new JTable(data, columnNames);
-        table.setLocation(50, 50); 
-        table.setSize(400, 200); 
-        table.setVisible(false);
-        c.add(table);
     }
 
     public void clickGeneral(ActionEvent e) {
@@ -288,12 +279,13 @@ public class pacientePanel extends JPanel {
             provincia.setVisible(true);
             tprovincia.setVisible(true);
         }else if(e.getSource() == listar){
+            
             tsearch.setVisible(false);
             search.setVisible(false);
             tipoB.setVisible(false); 
             idB.setVisible(false); 
 
-            table.setVisible(true);
+           
             nombre.setVisible(false);
             tname.setVisible(false); 
             apellido.setVisible(false);
@@ -311,18 +303,86 @@ public class pacientePanel extends JPanel {
             female.setVisible(false);
             provincia.setVisible(false);
             tprovincia.setVisible(false);
-        }
+            conection bj = new conection();
+            Vector<Vector<Object>> data2 = new Vector<Vector<Object>>();
+            Vector<String> columnNames = new Vector<String>();
+            try
+            {
+               Class.forName("com.mysql.jdbc.Driver");
+               Statement stmt = bj.OpenConnection();
+               String sql = "select * from paciente";
+               ResultSet rs = stmt.executeQuery(sql);
+               ResultSetMetaData metaData = rs.getMetaData();
 
+            // Names of columns
+           
+            int columnCount = metaData.getColumnCount();
+            for (int i = 1; i <= columnCount; i++) {
+                columnNames.add(metaData.getColumnName(i));
+                System.out.println(metaData.getColumnName(i));
+            }
+
+            // Data of the table
+            
+            while (rs.next()) {
+                Vector<Object> vector = new Vector<Object>();
+                for (int i = 1; i <= columnCount; i++) {
+                    vector.add(rs.getObject(i));
+                    System.out.println(rs.getObject(i));
+                }
+                data2.add(vector);
+            }
+           }
+           catch(Exception ex)
+           { 
+               System.out.println("Error2 "+ex.toString());
+           }
+           if(!data2.isEmpty()){
+            table = new JTable(data2, columnNames);
+            table.setLocation(50, 50); 
+            table.setSize(700, 400); 
+            
+            c.add(table);
+           }
+        }else if(e.getSource() == search){
+           if(idB.getSelectedItem() != null)
+           {    String sql;
+                conection bj = new conection();
+                if(idB.getSelectedItem().equals("Codigo"))
+                {
+                    sql = "select * from paciente Where Id ="+tsearch.getText();
+                }
+                else{
+                    sql = "select * from paciente Where cedula ="+tsearch.getText();
+                    }
+                try
+                {
+                    Class.forName("com.mysql.jdbc.Driver");
+                    Statement stmt = bj.OpenConnection();
+                    
+                    ResultSet rs = stmt.executeQuery(sql);
+                    ResultSetMetaData metaData = rs.getMetaData();
+                }
+                catch(Exception ex)
+                { 
+                    System.out.println("Error2 "+ex.toString());
+                }
+           }
+           else{
+            res.setText("Por favor"
+            + " selecciona el tipo de busqueda.."); 
+           }
+        }
     }
-    protected ImageIcon createImageIcon(String path,
-                                           String description) {
-    java.net.URL imgURL = getClass().getResource(path);
-    if (imgURL != null) {
-        return new ImageIcon(imgURL, description);
-    } else {
-        System.err.println("Couldn't find file: " + path);
-        return null;
+    protected ImageIcon createImageIcon(String path, String description) 
+    {
+        java.net.URL imgURL = getClass().getResource(path);
+        if (imgURL != null) {
+            return new ImageIcon(imgURL, description);
+        } else {
+            System.err.println("Couldn't find file: " + path);
+            return null;
+        }
     }
-}
 
 }

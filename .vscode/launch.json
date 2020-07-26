@@ -1,0 +1,57 @@
+{
+    // Use IntelliSense to learn about possible attributes.
+    // Hover to view descriptions of existing attributes.
+    // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+    "version": "0.2.0",
+    "configurations": [
+        
+        {
+            "type": "java",
+            "name": "Debug (Launch) - Current File",
+            "request": "launch",
+            "mainClass": "${file}"
+        },
+        {
+            "type": "java",
+            "name": "Debug (Launch)-Mysql<COVID19UTP_17ca019d>",
+            "request": "launch",
+            "mainClass": "Mysql",
+            "projectName": "COVID19UTP_17ca019d"
+        },
+        {
+            "type": "java",
+            "name": "Debug (Launch)-Registration<COVID19UTP_17ca019d>",
+            "request": "launch",
+            "mainClass": "Registration",
+            "projectName": "COVID19UTP_17ca019d"
+        },
+        {
+            "type": "java",
+            "name": "Debug (Launch)-change<COVID19UTP_17ca019d>",
+            "request": "launch",
+            "mainClass": "change",
+            "projectName": "COVID19UTP_17ca019d"
+        },
+        {
+            "type": "java",
+            "name": "Debug (Launch)-main<COVID19UTP_17ca019d>",
+            "request": "launch",
+            "mainClass": "main",
+            "projectName": "COVID19UTP_17ca019d"
+        },
+        {
+            "type": "java",
+            "name": "Debug (Launch)-mysql<COVID19UTP_17ca019d>",
+            "request": "launch",
+            "mainClass": "mysql",
+            "projectName": "COVID19UTP_17ca019d"
+        },
+        {
+            "type": "java",
+            "name": "Debug (Launch)-teste<COVID19UTP_17ca019d>",
+            "request": "launch",
+            "mainClass": "teste",
+            "projectName": "COVID19UTP_17ca019d"
+        }
+    ]
+}

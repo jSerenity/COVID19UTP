@@ -27,7 +27,8 @@ public class Garrido_016_ProyFinal extends JFrame implements ActionListener {
         super("COVID19...");
         menuPanel = new menu(this);
         initComponents();
-        setSize(800, 500);
+        setSize(1000, 600);
+        //setExtendedState(JFrame.MAXIMIZED_BOTH); 
         setLocationRelativeTo(null);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setResizable(false); 

@@ -1,11 +1,6 @@
 import java.awt.*;
 import java.awt.event.*;
-import java.io.UnsupportedEncodingException;
-import javax.swing.Timer;
-import javax.swing.GroupLayout.Alignment;
 import javax.swing.*;
-import javax.swing.border.EmptyBorder;
-import java.util.*;
 
 public class menu extends JPanel{
     private static JPanel iniPanel = new JPanel();
@@ -19,24 +14,26 @@ public class menu extends JPanel{
     JToggleButton doctoresMButton = new JToggleButton("Doctores");
     JToggleButton pacienteRButton = new JToggleButton("Pacientes");
     JToggleButton doctoresRButton = new JToggleButton("Doctores");
-
+    ActionListener repoListener ;
+    ActionListener manteListener ;
     public Garrido_016_ProyFinal parentB;
+
     menu(Garrido_016_ProyFinal parent){
         parentB=parent;
-        smallMenu();
-        initComponents();
         setLayout(null);
         setPreferredSize(new Dimension(160, 500));
+        initComponents();
+        smallMenu();
     }
     protected void initComponents() {
         
-        ActionListener manteListener = new ActionListener() {
+         manteListener = new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 jToggleButtonMenu1ActionPerformed(e);
             }
         };
-        ActionListener repoListener = new ActionListener() {
+         repoListener = new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 jToggleButtonMenu2ActionPerformed(e);
@@ -93,7 +90,7 @@ public class menu extends JPanel{
         add(reporPanel);
         
     }
-    private void jToggleButtonMenu1ActionPerformed(java.awt.event.ActionEvent evt) {
+    private void jToggleButtonMenu1ActionPerformed(ActionEvent evt) {
         if (manteMenu.isSelected()) {
             //Menu 1
             mantePanel.setSize(160, 145);
@@ -107,7 +104,7 @@ public class menu extends JPanel{
             smallMenu();
         }
       }
-    private void jToggleButtonMenu2ActionPerformed(java.awt.event.ActionEvent evt) {                                                  
+    private void jToggleButtonMenu2ActionPerformed(ActionEvent evt) {                                                  
          if (repoMenu.isSelected()) {
              //Menu 1
              mantePanel.setSize(160, 60);
