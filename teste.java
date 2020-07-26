@@ -1,63 +1,48 @@
-import java.awt.*;
-import javax.swing.*;
-import java.awt.event.*;
-/** @see http://stackoverflow.com/a/14927280/230513 */
+import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.FlowLayout;
+import java.awt.LayoutManager;
+
+import javax.swing.BorderFactory;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.border.Border;
+
 public class teste {
 
-       public static void main(String[] args) {
-           EventQueue.invokeLater(new Runnable() {
+   public static void main(String[] args) {
+      createWindow();
+   }
 
-               @Override
-               public void run() {
-                   display();
-               }
-           });
-       }
+   private static void createWindow() {    
+      JFrame frame = new JFrame("Swing Tester");
+      frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-       private static void display() throws HeadlessException {
-           JFrame frame = new JFrame("COVID19");
-           JButton inicioButton = new JButton("Inicio");
-           JButton mantenimeintoButton = new JButton("Mantenimiento");
-           JButton reporteButton = new JButton("Reporte");
+      createUI(frame);
+      frame.setSize(560, 200);      
+      frame.setLocationRelativeTo(null);  
+      frame.setVisible(true);
+   }
 
-           //iconPanel settings
-           Box iconPanel = new Box(BoxLayout.Y_AXIS);
-           iconPanel.add(inicioButton);
-           iconPanel.add(mantenimeintoButton);
-           iconPanel.add(reporteButton);
+   private static void createUI(JFrame frame){
+      //Create a border
+      Border blackline = BorderFactory.createTitledBorder("Title");
+      JPanel panel = new JPanel();
+      LayoutManager layout = new FlowLayout();  
+      panel.setLayout(null);       
 
-           ActionListener buttonListener = new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-               /// mover(e.getSource());
-            }
-        };
+      JPanel panel1 = new JPanel();
+      panel.setLayout(null); 
+      String spaces = "                   ";
 
-           iconPanel.setBackground(Color.gray);
-           iconPanel.setVisible(true);
-           frame.add(iconPanel, BorderLayout.WEST);
+      panel1.add(new JLabel(spaces + "Title border to JPanel" + spaces));  
+      panel1.setLocation(0,150);
+      panel1.setPreferredSize(new Dimension(500, 500));
+      panel1.setBorder(blackline);
 
-           //grid setting
-           JPanel grid = new JPanel() {
-
-               @Override
-               // arbitrary placeholder size
-               public Dimension getPreferredSize() {
-                   return new Dimension(320, 230);
-               }
-           };
-           grid.setBackground(Color.red);
-           frame.add(grid, BorderLayout.CENTER);
-
-           //frame setting
-           frame.pack();
-           frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-           frame.setLocationRelativeTo(null);
-           frame.setVisible(true);
-
-           
-       }
-       public void mover(Object b) {
-           
-    }
+      panel.add(panel1);
+      frame.getContentPane().add(panel, BorderLayout.CENTER);    
+   }
 }

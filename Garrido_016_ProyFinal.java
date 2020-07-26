@@ -30,6 +30,7 @@ public class Garrido_016_ProyFinal extends JFrame implements ActionListener {
         setSize(800, 500);
         setLocationRelativeTo(null);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setResizable(false); 
         
     }
 
