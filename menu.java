@@ -7,9 +7,14 @@ public class menu extends JPanel{
     private static JPanel mantePanel = new JPanel();
     private static JPanel reporPanel = new JPanel();
     JToggleButton inicioMenu = new JToggleButton("INICIO");
-    JToggleButton manteMenu = new JToggleButton("MANTENIMIENTO");
-    JToggleButton repoMenu = new JToggleButton("REPORTES");
     
+    JToggleButton manteMenu;
+    
+    JToggleButton repoMenu;
+    
+    ClassLoader cldr = this.getClass().getClassLoader();
+    ImageIcon leftButtonIcon;
+    ImageIcon downButtonIcon;
     JToggleButton pacienteMButton = new JToggleButton("Pacientes");
     JToggleButton doctoresMButton = new JToggleButton("Doctores");
     JToggleButton pacienteRButton = new JToggleButton("Pacientes");
@@ -26,7 +31,18 @@ public class menu extends JPanel{
         smallMenu();
     }
     protected void initComponents() {
-        
+        java.net.URL imageURL   = cldr.getResource("iconos/derecha.png");
+        leftButtonIcon = new ImageIcon(imageURL);
+        java.net.URL imageURL2   = cldr.getResource("iconos/abajo.png");
+        downButtonIcon =  new ImageIcon(imageURL2);
+        manteMenu= new JToggleButton("<html><b>MANTENIMIENTO</b><br>",leftButtonIcon);
+        repoMenu = new JToggleButton("<html><div align=left width=100px><b>REPORTES</b></div></html>",downButtonIcon);
+        //"<html><div align=right width=100%><b>REPORTES</b></div></html>"
+        Font font = manteMenu.getFont().deriveFont(Font.PLAIN);
+        manteMenu.setFont(font);
+        Font font2 = repoMenu.getFont().deriveFont(Font.PLAIN);
+        repoMenu.setFont(font2);
+
          manteListener = new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -93,11 +109,13 @@ public class menu extends JPanel{
     private void jToggleButtonMenu1ActionPerformed(ActionEvent evt) {
         if (manteMenu.isSelected()) {
             //Menu 1
+            manteMenu.setIcon(downButtonIcon);
             mantePanel.setSize(160, 145);
             //Menu 2
             reporPanel.setLocation(0, 205);
             reporPanel.setSize(160, 60);          
             repoMenu.setSelected(false); 
+            repoMenu.setIcon(leftButtonIcon);
             inicioMenu.setSelected(false);          
         }
         else {
@@ -107,10 +125,12 @@ public class menu extends JPanel{
     private void jToggleButtonMenu2ActionPerformed(ActionEvent evt) {                                                  
          if (repoMenu.isSelected()) {
              //Menu 1
+             repoMenu.setIcon(downButtonIcon);
              mantePanel.setSize(160, 60);
              manteMenu.setSelected(false);
              inicioMenu.setSelected(false); 
              //Menu 2
+             manteMenu.setIcon(leftButtonIcon);
              reporPanel.setLocation(0, 120);
              reporPanel.setSize(160, 145); 
          }
@@ -122,10 +142,13 @@ public class menu extends JPanel{
         //menu inicio
         iniPanel.setSize(160, 60);
         //Menu 1
+        manteMenu.setIcon(leftButtonIcon);
         mantePanel.setLocation(0, 60);
         mantePanel.setSize(160, 60);
         manteMenu.setSelected(false); 
+
         //Menu 2
+        repoMenu.setIcon(leftButtonIcon);
         reporPanel.setLocation(0, 120);
         reporPanel.setSize(160, 60);           
         repoMenu.setSelected(false);
