@@ -5,7 +5,7 @@ import javax.swing.*;
 public class presentacion  extends JPanel{
     private static String[] presentation = { "Universidad Tecnologica de Panama",
     "Facultad de Ing. de Sistemas Computacionales", "Carrera: Desarrollo de Software", "Profesor: Ricardo Chan",
-    "Estudiante: Alba Garrido", "Cedula: 7-709-2016", "Grupo: ILS222", "Fecha: 28 de Julio de 2020" };
+    "Estudiante: Alba Garrido", "Cedula: 7-709-2016", "Grupo: ILS222", "Fecha: 27 de Julio de 2020" };
     presentacion(){
         initComponents();
         setLayout(null);

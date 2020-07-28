@@ -223,16 +223,16 @@ public class doctorPanel extends JPanel {
         c.add(pames); 
         tpames = new JSpinner(); 
         tpames.setFont(new Font("Arial", Font.PLAIN, 15)); 
-        tpames.setBounds(460,100,190,30);
+        tpames.setBounds(480,100,190,30);
         c.add(tpames);
         
-        panos = new JLabel("Paciente al año"); 
+        panos = new JLabel("Pacientes anuales"); 
         panos.setFont(new Font("Arial", Font.PLAIN, 15)); 
-        panos.setBounds(360,150,100,30);
+        panos.setBounds(360,150,110,30);
         c.add(panos); 
         tpanos = new JSpinner(); 
         tpanos.setFont(new Font("Arial", Font.PLAIN, 15)); 
-        tpanos.setBounds(460,150,190,30);
+        tpanos.setBounds(480,150,190,30);
         c.add(tpanos);
         
         tel = new JLabel("Telefono"); 
@@ -241,7 +241,7 @@ public class doctorPanel extends JPanel {
         c.add(tel);
         ttel = new JTextField(); 
         ttel.setFont(new Font("Arial", Font.PLAIN, 15)); 
-        ttel.setBounds(460,200,190,30);//
+        ttel.setBounds(480,200,190,30);//
         c.add(ttel);
 
 
@@ -270,7 +270,7 @@ public class doctorPanel extends JPanel {
         c.add(add); 
         tadd = new JTextArea(); 
         tadd.setFont(new Font("Arial", Font.PLAIN, 15)); 
-        tadd.setBounds(460,250,190,75);
+        tadd.setBounds(480,250,190,75);
         tadd.setLineWrap(true); 
         c.add(tadd); 
         dtm_paciente = new DefaultTableModel();
@@ -338,7 +338,7 @@ public class doctorPanel extends JPanel {
                         iconLabel.setIcon(imageIcon2); 
                         iconLabel.setVisible(true);
                     }else{
-                        limpiar.setEnabled(false);
+                        limpiar.setEnabled(true);
                         modificar.setEnabled(false);
                         eliminar.setEnabled(false);
                         adicionar.setEnabled(true);
@@ -400,8 +400,8 @@ public class doctorPanel extends JPanel {
         dataMedico.setTelefono(ttel.getText());
         dataMedico.setcodigo(tcodigo.getText());
         var p =(ComboItem)tespecialidad.getModel().getSelectedItem();
-
-       dataMedico.setcodigo(p.getValue());
+        System.out.println(p.getValue());
+       dataMedico.setespecodigo(p.getValue());
        int r =dataMedico.adicionar();
        if(r==1)
         {   limpiar();

@@ -343,7 +343,7 @@ public class pacientePanel extends JPanel {
                         iconLabel.setIcon(imageIcon2); 
                         iconLabel.setVisible(true);
                     }else{
-                        limpiar.setEnabled(false);
+                        limpiar.setEnabled(true);
                         modificar.setEnabled(false);
                         eliminar.setEnabled(false);
                         adicionar.setEnabled(true);

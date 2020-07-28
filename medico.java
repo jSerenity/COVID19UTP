@@ -101,7 +101,7 @@ public class medico extends persona {
         {
             Class.forName("com.mysql.jdbc.Driver");
             Statement stmt = db.OpenConnection();
-            sql = "select a.id, a.nombre, a.apellido, a.cedula, a.direccion, a.telefono,a.pacientes_mes as `pacientes_al_mes` , a.pacientes_anual as `pacientes_al_año`,a.codigo, b.descripcion as `especialidad` from medico a inner join especialidad b on a.especialidad =b.codigo";
+            sql = "select a.id, a.nombre, a.apellido, a.cedula, a.direccion, a.telefono,a.pacientes_mes as `pacientes_al_mes` , a.pacientes_anual as `pacientes_al_año`,a.codigo, b.descripcion as `especialidad` from medico a inner join especialidad b on a.especialidad =b.codigo order by Id";
             ResultSet rs = stmt.executeQuery(sql);
             ResultSetMetaData metaData = rs.getMetaData();
             int columnCount=0;

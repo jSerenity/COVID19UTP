@@ -4,7 +4,7 @@ public class conection {
 String URL, user, pass;
 String sql;    
 String cedula, nombre, apellido;
-
+Connection con;
 public Statement Connection;
 
 public Statement OpenConnection()
@@ -15,7 +15,7 @@ public Statement OpenConnection()
 
     try
     {
-        Connection con = DriverManager.getConnection(URL,user,pass);
+        con = DriverManager.getConnection(URL,user,pass);
         Connection = con.createStatement();
     }
     catch(Exception e)
@@ -34,6 +34,9 @@ public void CloseConnection()
     { 
         System.out.println("Error "+e.toString());
     }
+}
+public Connection getCon(){
+    return con;
 }
 
 }

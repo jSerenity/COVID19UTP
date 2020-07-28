@@ -98,7 +98,7 @@ public class paciente extends persona {
         {
             Class.forName("com.mysql.jdbc.Driver");
             Statement stmt = db.OpenConnection();
-            sql = "select a.id, a.nombre, a.apellido, a.cedula, a.direccion, a.telefono, a.edad, if(a.sexo='M','Hombre','Mujer') as Sexo, (b.descripcion) as Provincia from paciente a inner join provincia b on a.provincia =b.codigo";
+            sql = "select a.id, a.nombre, a.apellido, a.cedula, a.direccion, a.telefono, a.edad, if(a.sexo='M','Hombre','Mujer') as Sexo, (b.descripcion) as Provincia from paciente a inner join provincia b on a.provincia =b.codigo order by Id";
             ResultSet rs = stmt.executeQuery(sql);
             ResultSetMetaData metaData = rs.getMetaData();
             int columnCount=0;
@@ -134,7 +134,51 @@ public class paciente extends persona {
             System.out.println("error "+e.toString());
         }
     }
+    public void listar(DefaultTableModel dtm, String order)
+    {   
+        sql = "";
+        Object[] fila = new Object[3];
 
+        try
+        {
+            Class.forName("com.mysql.jdbc.Driver");
+            Statement stmt = db.OpenConnection();
+            sql = "select a.id, a.nombre, a.apellido, a.cedula, a.direccion, a.telefono, a.edad, if(a.sexo='M','Hombre','Mujer') as Sexo, (b.descripcion) as Provincia from paciente a inner join provincia b on a.provincia =b.codigo order by "+order;
+            ResultSet rs = stmt.executeQuery(sql);
+            ResultSetMetaData metaData = rs.getMetaData();
+            int columnCount=0;
+            columnCount = metaData.getColumnCount();
+            if (dtm.getRowCount()>0)
+                dtm.setRowCount(0);
+            else
+            {
+                
+                for (int i = 1; i <= columnCount; i++) {
+                    if(metaData.getColumnName(i).equals("descripcion"))
+                    {dtm.addColumn("Provincia");
+
+                    }else{
+                        dtm.addColumn(metaData.getColumnName(i));
+                    }
+                   
+                }
+            }
+            while (rs.next())
+            {
+                Vector<Object> vector = new Vector<Object>();
+                for (int i = 1; i <= columnCount; i++) {
+                    vector.add(rs.getObject(i));
+                    System.out.println(rs.getObject(i));
+                }
+                dtm.addRow(vector);
+            }
+            db.CloseConnection();
+        }
+        catch(Exception e)
+        {
+            System.out.println("error "+e.toString());
+        }
+    }
     public int modificar()
     {
         sql = "";
